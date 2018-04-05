@@ -1,22 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Back : MonoBehaviour {
 
-    private void Awake()
+    public void LoadScene(string scene)
     {
-        
+        LoadSceneByName(scene);
     }
-
-    public void BackBotton()
+    public IEnumerator LoadSceneByName(string scene)
     {
-        Invoke("DoBack", 0.5f);
-    }
-
-    public void DoBack()
-    {
-        Application.LoadLevel("Lobby");
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene(scene);
     }
 }

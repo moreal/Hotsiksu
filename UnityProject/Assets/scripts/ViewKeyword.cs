@@ -9,7 +9,7 @@ public class ViewKeyword : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        view();
+        action();
     }
 
     // Update is called once per frame
@@ -17,7 +17,7 @@ public class ViewKeyword : MonoBehaviour {
 
     }
 
-    public void view() {
+    public void action() {
         GetComponent<Text>().text = keywords[Random.Range(0, keywords.Length)];
     }
 }

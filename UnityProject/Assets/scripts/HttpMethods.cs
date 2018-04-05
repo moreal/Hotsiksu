@@ -1,24 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 using System.Net;
 using System.Web;
 using System;
 using System.IO;
 
-public class HttpMethods : MonoBehaviour {
+public class HttpMethods {
 
     public static string url = "http://hotsex.run.goorm.io";
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public class Response
     {
@@ -36,7 +27,6 @@ public class HttpMethods : MonoBehaviour {
     {
         HttpWebRequest req = (HttpWebRequest) WebRequest.Create(new Uri(url+path));
         req.Credentials = CredentialCache.DefaultCredentials;
-        //req.Headers.Add("Host","hotsex.run.groom.io");
         req.Method = "GET";
         HttpWebResponse rep = (HttpWebResponse)req.GetResponse();
         Stream stream = rep.GetResponseStream();
@@ -44,15 +34,24 @@ public class HttpMethods : MonoBehaviour {
         return new Response((int)rep.StatusCode, reader.ReadToEnd());
     }
 
-    public static Response GetPOST(string path)
+    public static Response GetPOST(string path, byte[] data = null)
     {
         HttpWebRequest req = (HttpWebRequest)WebRequest.Create(new Uri(url + path));
         req.Credentials = CredentialCache.DefaultCredentials;
         req.Method = "POST";
-        //req.Headers.Add("Host: hotsex.run.groom.io");
+
+        if (data != null)
+        {
+            req.GetRequestStream().Write(data, 0, data.Length);
+            req.ContentLength = data.Length;
+            req.ContentType = "application/octet-stream";
+        }
+
         HttpWebResponse rep = (HttpWebResponse) req.GetResponse();
         Stream stream = rep.GetResponseStream();
         StreamReader reader = new StreamReader(stream);
         return new Response((int)rep.StatusCode, reader.ReadToEnd());
     }
+
+    
 }

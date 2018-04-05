@@ -21,6 +21,7 @@ public class Login : MonoBehaviour {
     {
         string id = textField.GetComponent<Text>().text;
         HttpMethods.Response resp = HttpMethods.GetGET("/login/" + id);
+
         if (resp.status_code == 403)
             Debug.Log("Error");
         else if (resp.status_code == 200)
